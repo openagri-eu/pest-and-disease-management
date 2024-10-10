@@ -1,0 +1,22 @@
+services:
+  db:
+    hostname: postgres
+    image: "postgres"
+    volumes:
+      - data:/etc/data
+    ports:
+      - "5432:5432"
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: postgres
+  backend:
+    image: backend
+    volumes:
+      - data:/etc/data
+    build: .
+    ports:
+      - "80:80"
+    env_file: ../reporting-service/defaults.env
+
+volumes:
+  data:
