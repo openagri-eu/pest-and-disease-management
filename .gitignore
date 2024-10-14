@@ -1,0 +1,6 @@
+.venv
+.idea
+.alembic
+.env_local
+__pycache__
+.env
