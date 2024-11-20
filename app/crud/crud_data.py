@@ -18,6 +18,10 @@ class CrudData(CRUDBase[Data, CreateData, dict]):
         query = db.query(Data).filter(Data.dataset_id == dataset_id).order_by(Data.date.asc(), Data.time.asc())
         return query
 
+    def get_data_interval_query_by_dataset_id(self, db: Session, dataset_id: int) -> Query:
+        query = db.query(Data).filter(Data.dataset_id == dataset_id).order_by(Data.date.asc(), Data.time.asc())
+        return query
+
     def batch_insert(self, db: Session, rows: List[CreateData]) -> Optional[List[Data]]:
         rows_model = [Data(**x.model_dump()) for x in rows]
 
