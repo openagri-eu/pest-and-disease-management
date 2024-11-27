@@ -16,8 +16,6 @@ def calculate_risk_index_probability(db: Session, weather_dataset_id: int, pest_
 
     dataset_db = crud.dataset.get(db=db, id=weather_dataset_id)
 
-    dataset_db = crud.dataset.get(db=db, id=weather_dataset_id)
-
     df = pd.read_sql(sql=data_db.statement, con=db.bind, parse_dates={"date": "%Y-%m-%d"})
 
     # Calculate the risks associated with each pest_model
