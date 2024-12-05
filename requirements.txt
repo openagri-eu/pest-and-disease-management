@@ -1,6 +1,6 @@
 fastapi==0.111.0
 alembic==1.13.1 # DB migrations
-requests==2.31.0 # Readable HTTP
+requests==2.32.0 # Readable HTTP
 #pyargon2==1.0.7 # Encryption
 psycopg2==2.9.9 # PSQL driver
 password-validator==1.0 # Enforceable rules for passwords
