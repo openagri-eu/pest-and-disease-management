@@ -38,19 +38,6 @@ sed -i -e "s/PGU/${POSTGRES_USER}/g" -e "s/PGP/${POSTGRES_PASSWORD}/g" -e "s/PGH
 echo "Starting db migrations"
 
 alembic upgrade head
-#exit_code=$?
-#count=0
-#
-#while [[ "${exit_code}" -ne 0 && "${count}" -lt 5 ]]
-#do
-#  count=$((count+1))
-#  echo "${count}"
-#
-#  alembic upgrade head
-#
-#  exit_code=$?
-#  sleep 2
-#done
 
 echo "Finished db migrations"
 
@@ -58,6 +45,6 @@ echo "Finished db migrations"
 # Start the FastAPI app with uvicorn
 echo "Starting Uvicorn server"
 
-exec uvicorn --host 0.0.0.0 --port 80 --app-dir=app 'main:app'
+exec uvicorn --host 0.0.0.0 --port "$1" --app-dir=app 'main:app'
 
 echo "Started Uvicorn server"
