@@ -18,9 +18,9 @@ services:
         condition: service_healthy
     image: ghcr.io/openagri-eu/pest-and-disease-management:latest
     build: .
-    command: /code/entrypoint.sh
+    command: /code/entrypoint.sh ${SERVICE_PORT}
     ports:
-      - "80:80"
+      - ${SERVICE_PORT}:${SERVICE_PORT}
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -29,3 +29,4 @@ services:
       POSTGRES_PORT: ${POSTGRES_PORT}
       ACCESS_TOKEN_EXPIRATION_TIME: ${ACCESS_TOKEN_EXPIRATION_TIME}
       JWT_KEY: ${JWT_KEY}
+      SERVICE_PORT: ${SERVICE_PORT}
