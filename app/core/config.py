@@ -45,6 +45,7 @@ class Settings(BaseSettings):
 
     ACCESS_TOKEN_EXPIRATION_TIME: int
     JWT_KEY: str
+    LOGGING: bool
 
 
 settings = Settings()

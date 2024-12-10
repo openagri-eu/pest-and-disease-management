@@ -1,5 +1,3 @@
-import datetime
-
 from fastapi import APIRouter, Depends, File, UploadFile, HTTPException
 from sqlalchemy.orm import Session
 
@@ -14,6 +12,9 @@ from codecs import iterdecode
 
 from utils.data import read_rows_csv
 
+from utils import get_logger
+
+logger = get_logger(api_path_name=__name__)
 router = APIRouter()
 
 
@@ -119,5 +120,8 @@ async def upload(
             status_code=400,
             detail="Unable to create dataset, error with database, please contact repository maintainer"
         )
+
+    if logger:
+        logger.info("New dataset uploaded! ID:{}".format(new_dataset.id))
 
     return Message(message="Successfully uploaded file.")
