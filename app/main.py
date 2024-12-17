@@ -5,10 +5,13 @@ from starlette.middleware.cors import CORSMiddleware
 from api.api_v1.api import api_router
 from core.config import settings
 from init.db_init import init_db
+from init.init_gatekeeper import register_apis_to_gatekeeper
 
 @asynccontextmanager
 async def lifespan(fa: FastAPI):
     init_db()
+    if settings.USING_GATEKEEPER:
+        register_apis_to_gatekeeper()
     yield
 
 app = FastAPI(

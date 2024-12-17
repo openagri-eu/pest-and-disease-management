@@ -12,7 +12,7 @@ import crud
 router = APIRouter()
 
 
-@router.get("/calculate-risk-index/weather/{weather_dataset_id}/model/{model_ids}/verbose")
+@router.get("/calculate-risk-index/weather/{weather_dataset_id}/model/{model_ids}/verbose/")
 def calculate_risk_index_verbose(
     weather_dataset_id: int,
     model_ids: DatasetIds = Depends(list_path_param),
@@ -50,7 +50,7 @@ def calculate_risk_index_verbose(
 
     return calculations
 
-@router.get("/calculate-risk-index/weather/{weather_dataset_id}/model/{model_ids}/high")
+@router.get("/calculate-risk-index/weather/{weather_dataset_id}/model/{model_ids}/high/")
 def calculate_risk_index_high(
     weather_dataset_id: int,
     model_ids: DatasetIds = Depends(list_path_param),

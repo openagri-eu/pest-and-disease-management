@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta
-from typing import Any, Union, Optional
+from typing import Any, Union
 from .config import settings
 from passlib.context import CryptContext
 
 import jwt
 
-ALGORITHM = "HS256"
+ALGORITHM = settings.JWT_ALGORITHM
 pwd_context = CryptContext(schemes=["argon2"])
 
 
