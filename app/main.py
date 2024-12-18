@@ -6,10 +6,14 @@ from api.api_v1.api import api_router
 from core.config import settings
 from init.db_init import init_db
 
+import logging
+
 @asynccontextmanager
 async def lifespan(fa: FastAPI):
     init_db()
     yield
+    logging.shutdown()
+
 
 app = FastAPI(
     title="Pest and Disease Management", openapi_url="/api/v1/openapi.json", lifespan=lifespan
