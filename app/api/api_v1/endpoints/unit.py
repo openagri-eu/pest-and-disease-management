@@ -14,7 +14,7 @@ router = APIRouter()
 def create_unit(
         unit_in: UnitCreate,
         db: Session = Depends(deps.get_db),
-        user: User = Depends(deps.get_current_user)
+        current_user: User = Depends(deps.get_current_user)
 ):
     """
     Creates a user defined unit
@@ -36,7 +36,7 @@ def create_unit(
 @router.get("/", response_model=Units)
 def get_units(
         db: Session = Depends(deps.get_db),
-        user: User = Depends(deps.get_current_user)
+        current_user: User = Depends(deps.get_current_user)
 ):
     """
     Returns a list of symbols that are currently available in the system
@@ -51,7 +51,7 @@ def get_units(
 def delete_unit(
         unit_id: UnitDelete,
         db: Session = Depends(deps.get_db),
-        user: User = Depends(deps.get_current_user)
+        current_user: User = Depends(deps.get_current_user)
 ):
     """
     Delete a unit

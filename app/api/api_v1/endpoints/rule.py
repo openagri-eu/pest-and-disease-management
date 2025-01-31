@@ -13,7 +13,7 @@ router = APIRouter()
 def create_rule(
         rule: CreateRuleWithConditions,
         db: Session = Depends(deps.get_db),
-        user: User = Depends(deps.get_current_user)
+        current_user: User = Depends(deps.get_current_user)
 ):
     """
     Create a rule such as: temperature > 50 AND air_pressure < 20 AND humidity < 50 and assign it to a pest model
@@ -91,7 +91,7 @@ def create_rule(
 @router.get("/", response_model=RulesDB)
 def get_all_rules(
         db: Session = Depends(deps.get_db),
-        user: User = Depends(deps.get_current_user)
+        current_user: User = Depends(deps.get_current_user)
 ) -> RulesDB:
     """
     Returns all stored rules.
@@ -106,7 +106,7 @@ def get_all_rules(
 def delete_rule(
         rule_id: int,
         db: Session = Depends(deps.get_db),
-        user: User = Depends(deps.get_current_user)
+        current_user: User = Depends(deps.get_current_user)
 ) -> Message:
     """
     Delete a rule
