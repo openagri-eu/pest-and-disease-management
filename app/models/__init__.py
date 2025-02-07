@@ -7,3 +7,5 @@ from .condition import Condition
 from .cultivation import Cultivation
 from .pest_model import PestModel
 from .parcel import Parcel
+from .disease import Disease
+from .gddinterval import GDDInterval

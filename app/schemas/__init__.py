@@ -8,3 +8,4 @@ from .user import *
 from .tool import *
 from .pest_model import *
 from .parcel import *
+from .disease import *

@@ -25,12 +25,12 @@ class Data(Base):
     wind_direction = Column(String, nullable=True)
     wind_gust = Column(Float, nullable=True, info={"unit_of_measure": "km/h"})
 
-    # OPen meteo nema ove
+    # Open meteo does not have these
     leaf_relative_humidity = Column(Float, nullable=True, info={"unit_of_measure": "percentage"})
     leaf_temperature = Column(Float, nullable=True, info={"unit_of_measure": "celsius"})
     leaf_wetness = Column(Float, nullable=True, info={"unit_of_measure": "time-frame"})
 
-    # ima 0-7, 7-28, 28-100, 100-255
+    # it has 0-7, 7-28, 28-100, 100-255
     soil_temperature_10cm = Column(Float, nullable=True, info={"unit_of_measure": "celsius"})
     soil_temperature_20cm = Column(Float, nullable=True, info={"unit_of_measure": "celsius"})
     soil_temperature_30cm = Column(Float, nullable=True, info={"unit_of_measure": "celsius"})
@@ -38,7 +38,7 @@ class Data(Base):
     soil_temperature_50cm = Column(Float, nullable=True, info={"unit_of_measure": "celsius"})
     soil_temperature_60cm = Column(Float, nullable=True, info={"unit_of_measure": "celsius"})
 
-    # nema
+    # also these
     solar_irradiance_copernicus = Column(Float, nullable=True, info={"unit_of_measure": "W/m2"})
 
     parcel_id: Mapped[int] = mapped_column(ForeignKey("parcel.id"))

@@ -6,3 +6,4 @@ from .crud_condition import condition
 from .crud_rule import rule
 from .crud_pest_model import pest_model
 from .crud_parcel import parcel
+from .crud_disease import disease

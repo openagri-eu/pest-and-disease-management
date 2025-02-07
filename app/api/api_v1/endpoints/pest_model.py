@@ -1,4 +1,3 @@
-import pandas as pd
 from fastapi import APIRouter, Depends, UploadFile, File
 from sqlalchemy.orm import Session
 from api import deps
@@ -7,13 +6,15 @@ import crud
 from models import User
 from schemas import PestModels, CreatePestModel, PestModelDB, Message, CreateCondition, CreateRule
 
+import pandas as pd
+
 router = APIRouter()
 
 
 @router.get("/", response_model=PestModels)
 def get_pest_models(
         db: Session = Depends(deps.get_db),
-        user: User = Depends(deps.get_current_user)
+        current_user: User = Depends(deps.get_current_user)
 ):
     """
     Returns all pest models
@@ -27,7 +28,7 @@ def get_pest_models(
 def create_pest_model(
         pm: CreatePestModel,
         db: Session = Depends(deps.get_db),
-        user: User = Depends(deps.get_current_user)
+        current_user: User = Depends(deps.get_current_user)
 ):
     """
     Create a base pest model

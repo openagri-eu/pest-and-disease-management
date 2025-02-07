@@ -51,6 +51,12 @@ def login_access_token(
                 detail="Error, no active account found with these credentials."
             )
 
+        if "access" not in response.json():
+            raise HTTPException(
+                status_code=400,
+                detail="Error, no access token found in response from gk."
+            )
+
         at = Token(
             access_token=response.json()["access"],
             token_type="bearer"

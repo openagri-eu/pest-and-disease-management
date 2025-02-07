@@ -1,3 +1,4 @@
+import datetime
 from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -22,6 +23,25 @@ def get_all_data(
     """
 
     response_object = crud.data.get_all(db=db)
+
+    return ListData(list_of_data=response_object)
+
+
+@router.get("/parcel/{parcel_id}/from/{start}/to/{end}", response_model=ListData)
+def get_data_for_parcel(
+        parcel_id: int,
+        start: datetime.date,
+        end: datetime.date,
+        db: Session = Depends(deps.get_db),
+        user: User = Depends(deps.get_current_user)
+) -> ListData:
+    """
+    This API returns weather data for a date interval, for some parcel
+    """
+
+    response_object = crud.data.get_data_by_parcel_id_and_date_interval(
+        db=db, parcel_id=parcel_id, start=start, end=end
+    )
 
     return ListData(list_of_data=response_object)
 

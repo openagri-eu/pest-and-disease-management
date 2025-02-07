@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 import utils
 from api import deps
 from models import User
-from schemas import list_path_param, DatasetIds
+from schemas import list_path_param, DatasetIds, GDDResponse
 
 import crud
 
@@ -107,3 +107,48 @@ def calculate_risk_index_high(
                                                           from_date=from_date, to_date=to_date, parameter="high")
 
     return calculations
+
+
+@router.get("/calculate-gdd/parcel/{parcel_id}/model/{model_ids}/verbose/{from_date}/from/{to_date}/to/",
+            response_model=GDDResponse)
+def calculate_gdd(
+    from_date: datetime.date,
+    to_date: datetime.date,
+    parcel_id: int,
+    model_ids: DatasetIds = Depends(list_path_param),
+    db: Session = Depends(deps.get_db),
+    user: User = Depends(deps.get_current_user)
+) -> GDDResponse:
+    """
+    Calculates and returns GDD for pest in parcel and date interval
+    """
+
+    if from_date > to_date:
+        raise HTTPException(
+            status_code=400,
+            detail="from_date must be later than to_date, from_date: {} | to_date: {}".format(from_date, to_date)
+        )
+
+    parcel_db = crud.parcel.get(db=db, id=parcel_id)
+
+    if not parcel_db:
+        raise HTTPException(
+            status_code=400,
+            detail="Error, parcel with ID {} does not exist".format(parcel_id)
+        )
+
+    disease_models_db = []
+    for disease_id in model_ids.ids:
+        disease_model_db = crud.disease.get(db=db, id=disease_id)
+        if not disease_model_db:
+            raise HTTPException(
+                status_code=400,
+                detail="Error, model with ID {} does not exist".format(disease_id)
+            )
+
+        disease_models_db.append(disease_model_db)
+
+    response_values = utils.calculate_gdd(db=db, parcel=parcel_db,
+                                          disease_models=disease_models_db, start=from_date, end=to_date)
+
+    return GDDResponse(models=response_values)

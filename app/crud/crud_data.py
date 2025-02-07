@@ -36,8 +36,12 @@ class CrudData(CRUDBase[Data, CreateData, dict]):
             Data.date.between(date_from, date_to)
         ).order_by(Data.date.asc(), Data.time.asc())
 
-    def get_data_by_parcel_id_and_date(self, db: Session, parcel_id: int, date: str, time: str):
+    def get_data_by_parcel_id_and_date(self, db: Session, parcel_id: int, date: datetime.date, time: datetime.time):
         return db.query(Data).filter(Data.parcel_id == parcel_id, Data.date == date, Data.time == time).first()
+
+    def get_data_by_parcel_id_and_date_interval(self, db: Session, parcel_id: int,
+                                                start: datetime.date, end: datetime.date):
+        return db.query(Data).filter(Data.parcel_id == parcel_id, Data.date >= start, Data.date <= end).all()
 
 
 data = CrudData(Data)
